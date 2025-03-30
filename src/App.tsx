@@ -26,6 +26,7 @@ const InitialClassRestrictions = Object.keys(CLASS_LIST).reduce((acc, className)
 function App() {
   const [values, setValues] = useState<Attributes>(InitialAttributes);
   const [classRestrictions, setClassRestrictions] = useState(InitialClassRestrictions);
+  const [selectedClass, setSelectedClass] = useState<string>();
 
   const updateValue = (attribute: string, value: number) => {
     setValues(prev => {
@@ -67,7 +68,7 @@ function App() {
       <section className="App-section">
         <div className='App-column'>
         <h2>Attributes</h2>
-          {ATTRIBUTE_LIST.map((attribute, index) => (
+          {ATTRIBUTE_LIST.map((attribute) => (
             <Attribute 
               key={attribute} 
               name={attribute}
@@ -80,16 +81,35 @@ function App() {
         <div className='App-column'>
           <h2>Classes</h2>
           {Object.entries(CLASS_LIST).map(([className]) => (
-            <div key={className} className={(classRestrictions[className][COUNT] === MaxAttributeCount ? "Classname-Enabled" : "")}>
-              {className} {classRestrictions[className][COUNT]}
+            <div 
+              key={className} 
+              className={(classRestrictions[className][COUNT] === MaxAttributeCount ? "Classname-Enabled" : "")}
+              onClick={() => setSelectedClass(className)}
+            >
+              {className}
             </div>
           ))}
         </div>
+        {selectedClass && <RequirementView className={selectedClass as Class} handleCloseView={() => setSelectedClass("")} />}
       </section>
       <section className="App-section">
       </section>
     </div>
   );
+}
+
+function RequirementView({ className, handleCloseView } : { className : Class, handleCloseView: () => void }) {
+  return <div className='App-column'>
+    <h2>{className} Minimum Requirements</h2>
+    {
+      Object.keys(CLASS_LIST[className]).map((attribute) => (
+        <div key={attribute}>
+          {attribute}: {CLASS_LIST[className][attribute]}
+        </div>
+      ))
+    }
+    <button onClick={handleCloseView}>Close Requirement View</button>
+  </div>;
 }
 
 function Attribute({ name, value, handleIncrement, handleDecrement }: 
