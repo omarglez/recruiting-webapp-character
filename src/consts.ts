@@ -1,5 +1,7 @@
 import type { Attributes, Class } from "./types";
 
+export const COUNT = "Count";
+
 export const ATTRIBUTE_LIST = [
     'Strength',
     'Dexterity',
