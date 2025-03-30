@@ -23,6 +23,8 @@ const InitialClassRestrictions = Object.keys(CLASS_LIST).reduce((acc, className)
   return acc;
 }, {});
 
+const CalculateModifier = (attributeValue: number) => Math.trunc(attributeValue / 2) - 5;
+
 function App() {
   const [values, setValues] = useState<Attributes>(InitialAttributes);
   const [classRestrictions, setClassRestrictions] = useState(InitialClassRestrictions);
@@ -115,7 +117,7 @@ function RequirementView({ className, handleCloseView } : { className : Class, h
 function Attribute({ name, value, handleIncrement, handleDecrement }: 
   { name: string, value: number, handleIncrement: () => void, handleDecrement: () => void }) {
   return <div>
-    {name}: {value}
+    {name}: {value} (Modifier {CalculateModifier(value)})
     <button onClick={handleIncrement}>+</button>
     <button onClick={handleDecrement}>-</button>
   </div>;
