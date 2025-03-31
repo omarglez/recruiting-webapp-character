@@ -17,4 +17,26 @@ export type ClassRestriction = {
     COUNT: number;
 };
 
+export type Skills = {
+    Acrobatics: number;
+    AnimalHandling: number;
+    Arcana: number;
+    Athletics: number;
+    Deception: number;
+    History: number;
+    Insight: number;
+    Intimidation: number;
+    Investigation: number;
+    Medicine: number;
+    Nature: number;
+    Perception: number;
+    Performance: number;
+    Persuasion: number;
+    Religion: number;
+    SleightOfHand: number;
+    Stealth: number;
+    Survival: number;
+    TOTAL: number;
+};
+
 export type Class = "Barbarian" | "Wizard" | "Bard";

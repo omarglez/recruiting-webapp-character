@@ -1,4 +1,5 @@
-import type { Attributes, ClassRestriction, Class } from "./types";
+import type { Attributes, ClassRestriction, Class, Skills } from "./types";
+import { CalculateModifier } from "./Utils";
 
 export const COUNT = "Count";
 
@@ -67,6 +68,11 @@ export const INITIAL_ATTRIBUTES = ATTRIBUTE_LIST.reduce((acc, attribute) => {
     return acc;
 }, {} as Attributes);
 
+export const INITIAL_MODIFIERS = ATTRIBUTE_LIST.reduce((acc, attribute) => {
+    acc[attribute] = CalculateModifier(INITIAL_ATTRIBUTES[attribute]);
+    return acc;
+}, {} as Attributes);
+
 export const INITIAL_CLASS_RESTRICTIONS = Object.keys(CLASS_LIST).reduce((acc, className) => { 
     let count = 0;
     acc[className] = ATTRIBUTE_LIST.reduce((acc, attribute) => {
@@ -79,3 +85,5 @@ export const INITIAL_CLASS_RESTRICTIONS = Object.keys(CLASS_LIST).reduce((acc, c
     acc[className][COUNT] = count;
     return acc;
 }, {}) as Record<Class, ClassRestriction>;
+
+export const INITIAL_SKILLS = { ...(SKILL_LIST.map((skill) => skill.name).reduce((acc, name) => {acc[name] = 0; return acc;}, {})), TOTAL: 0 } as Skills;
