@@ -1,4 +1,4 @@
-import type { Attributes, Class } from "./types";
+import type { Attributes, ClassRestriction, Class } from "./types";
 
 export const COUNT = "Count";
 
@@ -59,3 +59,23 @@ export const SKILL_LIST = [
     { name: 'Survival', attributeModifier: 'Wisdom' },
 
 ]
+
+export const MAX_ATTRIBUTE_COUNT = ATTRIBUTE_LIST.length;
+
+export const INITIAL_ATTRIBUTES = ATTRIBUTE_LIST.reduce((acc, attribute) => {
+    acc[attribute] = 8;
+    return acc;
+}, {} as Attributes);
+
+export const INITIAL_CLASS_RESTRICTIONS = Object.keys(CLASS_LIST).reduce((acc, className) => { 
+    let count = 0;
+    acc[className] = ATTRIBUTE_LIST.reduce((acc, attribute) => {
+        let isValid = INITIAL_ATTRIBUTES[attribute] >= CLASS_LIST[className][attribute];
+        count = isValid ? count + 1 : count;
+        acc[attribute] = isValid;
+        return acc;
+    }, {}) as ClassRestriction;
+
+    acc[className][COUNT] = count;
+    return acc;
+}, {}) as Record<Class, ClassRestriction>;

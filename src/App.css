@@ -49,6 +49,10 @@
   color: aquamarine;
 }
 
+.Classname-Disabled {
+  color: tomato;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
